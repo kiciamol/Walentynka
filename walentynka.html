@@ -50,7 +50,7 @@
       color: white;
     }
 
-    /* 💖 Serduszka */
+    /* 💖 Serduszka w tle */
     .heart {
       position: absolute;
       animation: floatUp 6s linear forwards;
@@ -95,7 +95,8 @@
 
   <h1 id="question">Czy będziesz moją Walentynką? 💘</h1>
 
-  <img id="gif" src="gif1.jpeg" alt="GIF">
+  <!-- STARTOWY GIF -->
+  <img id="gif" src="gif1.gif" alt="GIF">
 
   <div>
     <button id="yesBtn">TAK</button>
@@ -111,45 +112,49 @@
   const yesBtn = document.getElementById("yesBtn");
   const noBtn = document.getElementById("noBtn");
 
-  // Klik TAK
+  // Kliknięcie TAK
   yesBtn.addEventListener("click", () => {
 
     if(stage === 1){
       stage = 2;
+
+      // Drugi ekran
       question.innerText = "Na pewno? 😏";
-      gif.src = "gif2.jpeg";
+      gif.src = "gif2.gif";
       return;
     }
 
     if(stage === 2){
       stage = 3;
 
-      // 🎉 Konfetti!
+      // 🎉 Konfetti przy finale
       launchConfetti();
 
+      // Finałowy ekran
       question.innerText = "Dziękuję, kocham Cię ❤️";
-      gif.src = "gif3.jpeg";
+      gif.src = "gif3.gif";
 
       yesBtn.style.display = "none";
       noBtn.style.display = "none";
     }
   });
 
-  // Klik NIE
+  // Kliknięcie NIE
   noBtn.addEventListener("click", () => {
 
     if(stage !== 2) return;
 
     noClicks++;
 
-    // NIE maleje
+    // NIE się zmniejsza
     let scaleNo = Math.max(0.1, 1 - noClicks * 0.1);
     noBtn.style.transform = `scale(${scaleNo})`;
 
-    // TAK rośnie
+    // TAK się zwiększa
     let scaleYes = 1 + noClicks * 0.15;
     yesBtn.style.transform = `scale(${scaleYes})`;
 
+    // Po 11 kliknięciu NIE znika
     if(noClicks >= 11){
       noBtn.style.display = "none";
     }
@@ -177,13 +182,14 @@
 
   // 🎉 Konfetti funkcja
   function launchConfetti(){
-    for(let i=0; i<80; i++){
+    for(let i = 0; i < 80; i++){
       const conf = document.createElement("div");
       conf.classList.add("confetti");
 
       conf.style.left = Math.random() * 100 + "vw";
       conf.style.top = "-10px";
 
+      // losowy kolor
       conf.style.background = `hsl(${Math.random()*360},100%,70%)`;
 
       conf.style.animationDuration = (2 + Math.random()*2) + "s";
